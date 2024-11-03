@@ -4,6 +4,11 @@ import requests, pprint
 
 
 class Weather:
+    """
+    Creates a Weather object getting an apikey as input
+    and either a city name or lat and lon coordinates.
+    You can get your own apikey from https://openweathermap.org
+    """
 
     def __init__(self, apikey, city=None, lat=None, lon=None):
         if city:
