@@ -31,9 +31,11 @@ class Weather:
             raise ValueError(self.data['message'])
 
     def next_12h(self):
+        """Returns data for the next 12 hours as a dict"""
         return self.data['list'][:4]
 
     def next_12h_simplified(self):
+        """Returns date, temp and sky condition for the next 12 hours as a tuple of tuples"""
         simple_data_list = []
         for item in self.data['list'][:4]:
             simple_data_list.append((item['dt_txt'], item['main']['temp'], item['weather'][0]['description']))
@@ -46,11 +48,11 @@ class Weather:
 #
 # print(weather.next_12h())
 
-try:
-    # Example with missing inputs
-    weather = Weather(apikey="741e1ad8a03bb12d0fabb6a8d65c4df0", city="aaa")
-    # pprint.pprint(weather.next_12h())
-    pprint.pprint(weather.next_12h_simplified())
-
-except ValueError as e:
-    print(e)
+# try:
+#     # Example with missing inputs
+#     weather = Weather(apikey="741e1ad8a03bb12d0fabb6a8d65c4df0", city="aaa")
+#     # pprint.pprint(weather.next_12h())
+#     pprint.pprint(weather.next_12h_simplified())
+#
+# except ValueError as e:
+#     print(e)
