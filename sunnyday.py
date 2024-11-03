@@ -1,4 +1,4 @@
-import requests
+import requests, pprint
 
 # apikey = 741e1ad8a03bb12d0fabb6a8d65c4df0
 
@@ -22,11 +22,17 @@ class Weather:
         response = requests.get(url, params=params)
         self.data = response.json()
 
+        if self.data['cod'] != '200':
+            raise ValueError(self.data['message'])
+
     def next_12h(self):
         return self.data['list'][:4]
 
     def next_12h_simplified(self):
-        pass
+        simple_data_list = []
+        for item in self.data['list'][:4]:
+            simple_data_list.append((item['dt_txt'], item['main']['temp'], item['weather'][0]['description']))
+        return simple_data_list
 
 
 # weather = Weather(apikey="741e1ad8a03bb12d0fabb6a8d65c4df0", city="Madrid")
@@ -37,7 +43,9 @@ class Weather:
 
 try:
     # Example with missing inputs
-    weather = Weather(apikey="741e1ad8a03bb12d0fabb6a8d65c4df0")
-    print(weather.next_12h())
+    weather = Weather(apikey="741e1ad8a03bb12d0fabb6a8d65c4df0", city="aaa")
+    # pprint.pprint(weather.next_12h())
+    pprint.pprint(weather.next_12h_simplified())
+
 except ValueError as e:
     print(e)
